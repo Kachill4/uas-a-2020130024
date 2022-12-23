@@ -17,7 +17,7 @@
     <nav class="navbar navbar-expand-md navbar-dark bg-primary">
         <a class="navbar-brand" href="/">
             <i class="fa fa-film fa-fw" aria-hidden="true"></i>
-            <span class="menu-collapsed">Resto Ichi</span>
+            <span class="menu-collapsed"><H2>Resto Ichi</H2></span>
         </a>
     </nav>
     {{-- Top Navbar END --}}

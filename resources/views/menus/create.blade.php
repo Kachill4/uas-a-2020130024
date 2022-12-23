@@ -18,7 +18,7 @@
             <div class="col-md-4 mb-3">
                 <label for="id">Jenis Makanan</label>
                 <select class="form-control @error('id') is-invalid @enderror" name="id" id="id">
-                    <option value="none" disabled selected>Menu Type</option>
+                    <option value="none" disabled selected>Pilih Jenis Makanan</option>
                     <option value="makan" {{ old('id') == 'makan' ? 'selected' : '' }}>Makanan</option>
                     <option value="minum" {{ old('id') == 'minum' ? 'selected' : '' }}>Minuman</option>
                     <option value="snack"   {{ old('id') == 'snack'   ? 'selected' : '' }}>Snack</option>

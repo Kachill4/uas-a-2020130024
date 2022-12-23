@@ -132,9 +132,9 @@ class MenuController extends Controller
         }
         $idright = DB::select("SELECT RIGHT(id,3) rightid FROM menus WHERE id LIKE '$idA%' ORDER BY rightid DESC");
         if(!$idright){
-            $idB = sprintf("%04d", 1);
+            $idB = sprintf("%03d", 1);
         }else{
-            $idB = sprintf("%04d", $idright[0]->rightid + 1);
+            $idB = sprintf("%03d", $idright[0]->rightid + 1);
         }
         $validated["id"] = $idA . $idB;
 

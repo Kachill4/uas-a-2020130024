@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Menu List')
+@section('title', 'List Menu')
 @push('css_after')
     <style>
         td {
@@ -40,7 +40,8 @@
                         <th>ID</th>
                         <th>Nama</th>
                         <th>Rekomendasi</th>
-                        <th colspan="2">Harga</th>
+                        <th>Harga</th>
+                        <th>Edit</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,7 +51,11 @@
                             <td>{{ $menu->id }}</td>
                             <td><a href="{{ route('menus.show', $menu->id) }}"> {{ $menu->nama }}</a></td>
                             <td>{{ $menu->rekomendasi }}</td>
-                            <td colspan="2">{{ $menu->harga }}</td>
+                            <td>{{ $menu->harga }}</td>
+                            <td><a href="{{ route('menus.edit', $menu->id) }}">
+                                <button type="submit" class="btn btn-light ml-3"  >
+                                . . .
+                            </button></a></td>
                         </tr>
                     @empty
                         <tr>

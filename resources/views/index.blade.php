@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Main Page')
+@section('title', 'Home Page')
 @push('css_after')
     <style>
         td {

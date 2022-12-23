@@ -48,7 +48,7 @@
                                         <td>{{ $menu->id }}</td>
                                         <td>{{ $menu->nama }}</td>
                                         <td id="rec">{{ $menu->rekomendasi }}</td>
-                                        <td colspan="2" id="price">{{ $menu->harga }}</td>
+                                        <td colspan="2" id="harga">{{ $menu->harga }}</td>
                                         <td colspan="2">
                                             <input  type="hidden"
                                                     name="id1{{ $loop->iteration }}"
@@ -102,16 +102,16 @@
     <script>
         function myFunction() {
             let total = 0;
-            let price = 0;
+            let harga = 0;
             const qtyList = document.querySelectorAll("#quantity");
-            const priceList = document.querySelectorAll("#price");
+            const listHarga = document.querySelectorAll("#harga");
             const recList = document.querySelectorAll("#rec");
             let qtyCount = qtyList.length;
             for (var i = 0; i < qtyCount; i++) {
                 if(recList[i].innerHTML==1){
-                    total += (+qtyList[i].value)*((+priceList[i].innerHTML)*0.9);
+                    total += (+qtyList[i].value)*((+listHarga[i].innerHTML)*0.9);
                 }else{
-                    total += (+qtyList[i].value)*(+priceList[i].innerHTML);
+                    total += (+qtyList[i].value)*(+listHarga[i].innerHTML);
                 }
             }
             document.getElementById("total").innerHTML = Math.round(total*100)/100;
