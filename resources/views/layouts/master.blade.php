@@ -43,7 +43,7 @@
             </ul>
             {{-- Menu List END --}}
         </div>
-        
+
         {{-- Sidebar END --}}
 
         {{-- Content --}}

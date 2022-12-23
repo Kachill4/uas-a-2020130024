@@ -42,6 +42,8 @@
                             <tbody>
                                 @forelse ($menus as $menu)
                                     <tr>
+                                        {{-- <input type="hidden" name="id{{ $loop->iteration }}"
+                                        id="id" value={{ $menu->id }}> --}}
                                         <th scope="row">{{ $loop->iteration }}</th>
                                         <td>{{ $menu->id }}</td>
                                         <td>{{ $menu->nama }}</td>
@@ -49,13 +51,13 @@
                                         <td colspan="2" id="price">{{ $menu->harga }}</td>
                                         <td colspan="2">
                                             <input  type="hidden"
-                                                    name="id{{ $loop->iteration }}"
-                                                    id="id{{ $loop->iteration }}"
-                                                    value="{{ $menu->id }}">
-                                            <input  type="number" class="form-control @error('qty') is-invalid @enderror"
+                                                    name="id1{{ $loop->iteration }}"
+                                                    id="id1"
+                                                    value={{ $menu->id }}>
+                                            <input  type="number" class="form-control @error('quantity') is-invalid @enderror"
                                                     name="quantity{{ $loop->iteration }}"
-                                                    id="qty"
-                                                    value="{{ old('qty')}}" min="0">
+                                                    id="quantity"
+                                                    value="{{ old('quantity')}}" min="0">
                                         </td>
                                     </tr>
                                 @empty
@@ -71,17 +73,10 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12 mb-3 text-right">
-                <h6>
-                    Catatan: Total harga hanya akan muncul ketika user unfokus dari number field!
-                </h6>
-            </div>
-        </div>
-        <div class="row">
             <div class="col-md-8 mb-3 text-right">
-                <h4>
+                <h5>
                     Total Harga Sebelum PPN:
-                </h4>
+                </h5>
             </div>
             <div class="col-md-4 mb-3 text-right">
                 <h4 id="total">
@@ -108,7 +103,7 @@
         function myFunction() {
             let total = 0;
             let price = 0;
-            const qtyList = document.querySelectorAll("#qty");
+            const qtyList = document.querySelectorAll("#quantity");
             const priceList = document.querySelectorAll("#price");
             const recList = document.querySelectorAll("#rec");
             let qtyCount = qtyList.length;

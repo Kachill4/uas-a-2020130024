@@ -48,17 +48,20 @@ class OrderController extends Controller
         $allmenu = menu::all()->count();
         $orderId = order::all()->last()->id;
         for ($i = 1; $i <= $allmenu; $i++) {
-            if ($request['number' . $i] > 0) {
+            if ($request['quantity' . $i] > 0) {
                 DB::table('order_menu')->insert([
                     'order_id' => $orderId,
-                    'menu_id' => $request['id' . $i],
-                    'number' => $request['number' . $i],
+                    'menu_id' => $request['id1' . $i],
+                    'quantity' => $request['quantity' . $i],
                 ]);
+                dump($request['id1' . $i]);
             }
         }
-        dump($request['id' . $i]);
+        // dump($request['id' . $i]);
+        // dump($request['quantity' . $i]);
         $request->session()->flash('success', "Nomor {$orderId} berhasil menambahkan order!");
-        //return redirect(route('home.index'));
+        // dump($request['id1' . $i]);
+        return redirect(route('home.index'));
     }
 
     /**
