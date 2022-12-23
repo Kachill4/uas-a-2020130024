@@ -1,12 +1,12 @@
 @extends('layouts.master')
-@section('title', 'Add New Order')
+@section('title', 'Tambah Order')
 @section('content')
     <h2>Add New Order</h2>
     <form action="{{ route('order.store') }}" method="POST">
         @csrf
         <div class="row">
             <div class="col-md-4 mb-3">
-                <label for="status">Order Status</label>
+                <label for="status">Status Order</label>
                 <select class="form-control @error('status') is-invalid @enderror" name="status" id="status">
                     <option value="none" disabled selected>Status</option>
                     <option value="selesai" {{ old('status') == 'selesai' ? 'selected' : '' }}>Selesai</option>

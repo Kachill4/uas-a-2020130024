@@ -21,7 +21,7 @@
                     <option value="none" disabled selected>Pilih Jenis Makanan</option>
                     <option value="makan" {{ old('id') == 'makan' ? 'selected' : '' }}>Makanan</option>
                     <option value="minum" {{ old('id') == 'minum' ? 'selected' : '' }}>Minuman</option>
-                    <option value="snack"   {{ old('id') == 'snack'   ? 'selected' : '' }}>Snack</option>
+                    <option value="snack" {{ old('id') == 'snack' ? 'selected' : '' }}>Snack</option>
                 </select>
                 @error('id')
                     <div class="text-danger">{{ $message }}</div>
@@ -42,16 +42,27 @@
             <div class="col-md-2 mb-3">
                 <input type="hidden" name="rekomendasi" id="rekomendasi" value="0">
                 <label for="rekomendasi">Rekomendasi</label>
-                <input type="checkbox"
-                        class="form-check-input form-control @error('rekomendasi') is-invalid @enderror"
-                        name="rekomendasi"
-                        id="rekomendasi"
-                        value="1" {{ old('rekomendasi') == 'true' ? 'checked' : '' }}>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 mb-3">
+                <input type="checkbox" class="form-check-input form-control @error('rekomendasi') is-invalid @enderror"
+                    name="rekomendasi" id="rekomendasi" value="1" {{ old('rekomendasi') == 'true' ? 'checked' : '' }}>
                 @error('rekomendasi')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
         </div>
-        <button class="btn btn-primary btn-lg btn-block" type="submit">Tambah Menu</button>
+        <div class="row">
+            <div class="col-md-2 mb-5">
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 mb-3">
+                <button class="btn btn-primary btn-lg btn-block" type="submit">Tambah Menu</button>
+            </div>
+        </div>
+
     </form>
 @endsection

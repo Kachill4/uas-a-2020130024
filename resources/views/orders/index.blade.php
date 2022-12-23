@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Order List')
+@section('title', 'List Order')
 @push('css_after')
     <style>
         td {
@@ -23,7 +23,7 @@
             <div class="table-title">
                 <div class="row">
                     <div class="col-sm-10">
-                        <h2>Order List</h2>
+                        <h2>List Order</h2>
                     </div>
                     <div class="col-sm-2">
                         <a href="{{ route('order.create') }}" class="btn btn-success">

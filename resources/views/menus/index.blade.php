@@ -23,12 +23,12 @@
             <div class="table-title">
                 <div class="row">
                     <div class="col-sm-10">
-                        <h2>Menu List</h2>
+                        <h2>List Menu</h2>
                     </div>
                     <div class="col-sm-2">
                         <a href="{{ route('menus.create') }}" class="btn btn-success">
                             <i class="fa fa-plus fa-fw" aria-hidden="true"></i>
-                            <span>Add New Menu</span>
+                            <span>+Add New Menu</span>
                         </a>
                     </div>
                 </div>
