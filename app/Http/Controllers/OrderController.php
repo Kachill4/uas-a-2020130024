@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\menu;
 use App\Models\order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -14,7 +16,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $order = order::all();
+        return view('orders.index', compact('order'));
     }
 
     /**
@@ -24,7 +27,8 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        $menus = menu::all();
+        return view('order', compact('menus'));
     }
 
     /**
@@ -35,7 +39,26 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'status' => 'required'
+        ];
+        $validated = $request->validate($rules);
+
+        order::create($validated);
+        $allmenu = menu::all()->count();
+        $orderId = order::all()->last()->id;
+        for ($i = 1; $i <= $allmenu; $i++) {
+            if ($request['number' . $i] > 0) {
+                DB::table('order_menu')->insert([
+                    'order_id' => $orderId,
+                    'menu_id' => $request['id' . $i],
+                    'number' => $request['number' . $i],
+                ]);
+            }
+        }
+        dump($request['id' . $i]);
+        $request->session()->flash('success', "Nomor {$orderId} berhasil menambahkan order!");
+        //return redirect(route('home.index'));
     }
 
     /**
@@ -46,7 +69,35 @@ class OrderController extends Controller
      */
     public function show(order $order)
     {
-        //
+        $pesan = DB::select(
+            'SELECT o.menu_id,m.nama,m.rekomendasi,o.quantity,m.harga
+            FROM order_menu o
+            LEFT JOIN menus m
+            ON o.menu_id = m.id
+            WHERE o.order_id = ?',
+            [$order->id]
+        );
+
+        $dafhar = DB::select(
+            'SELECT m.rekomendasi,o.quantity*m.harga harga_satuan
+            FROM order_menu o
+            JOIN menus m
+            ON o.menu_id = m.id
+            WHERE o.order_id = ?',
+            [$order->id]
+        );
+
+        $harga = 0;
+        foreach ($dafhar as $dh) {
+            if ($dh->rekomendasi) {
+                $harga += round($dh->harga_satuan * 0.9, 2);
+            } else {
+                $harga += $dh->harga_satuan;
+            }
+        }
+        $harga = round($harga * 1.11, 2);
+
+        return view('orders.show', compact('order', 'pesan', 'harga'));
     }
 
     /**
@@ -80,6 +131,7 @@ class OrderController extends Controller
      */
     public function destroy(order $order)
     {
-        //
+        $order->delete();
+        return redirect(route('order.index'))->with('success', "Berhasil menghapus order nomor {$order['id']}!");
     }
 }

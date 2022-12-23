@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\menu;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MenuController extends Controller
 {
@@ -14,7 +15,8 @@ class MenuController extends Controller
      */
     public function index()
     {
-        //
+        $menus = menu::all();
+        return view('menus.index', compact('menus'));
     }
 
     /**
@@ -24,7 +26,7 @@ class MenuController extends Controller
      */
     public function create()
     {
-        //
+        return view('menus.create');
     }
 
     /**
@@ -35,7 +37,42 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'id'        => 'required|max:6',
+            'nama'      => 'required|max:255',
+            'rekomendasi'   => 'required',
+            'harga'     => 'required'
+        ];
+
+        $validated = $request->validate($rules);
+
+        $idA = '';
+        switch ($validated["id"]) {
+            case "makan":
+                $idA = 'MKN';
+                break;
+            case "minum":
+                $idA = 'MNM';
+                break;
+            case "snack":
+                $idA = 'SNK';
+                break;
+            default:
+                $idA = 'NNN';
+                break;
+        }
+        $idright = DB::select("SELECT RIGHT(id,3) rightid FROM menus WHERE id LIKE '$idA%' ORDER BY rightid DESC");
+        if(!$idright){
+            $idB = sprintf("%03d", 1);
+        }else{
+            $idB = sprintf("%03d", $idright[0]->rightid + 1);
+        }
+        $validated["id"] = $idA . $idB;
+
+        menu::create($validated);
+        $request->session()
+                ->flash('success', "Menu baru yang bernama '{$validated['nama']}' berhasil ditambahkan!");
+        return redirect()->route('menus.index');
     }
 
     /**
@@ -46,7 +83,7 @@ class MenuController extends Controller
      */
     public function show(menu $menu)
     {
-        //
+        return view('menus.show', compact('menu'));
     }
 
     /**
@@ -57,7 +94,7 @@ class MenuController extends Controller
      */
     public function edit(menu $menu)
     {
-        //
+        return view("menus.edit", compact("menu"));
     }
 
     /**
@@ -69,7 +106,42 @@ class MenuController extends Controller
      */
     public function update(Request $request, menu $menu)
     {
-        //
+        $rules = [
+            'id'        => 'required|max:6',
+            'nama'      => 'required|max:255',
+            'rekomendasi'   => 'required',
+            'harga'     => 'required'
+        ];
+
+        $validated = $request->validate($rules);
+
+        $idA = '';
+        switch ($validated["id"]) {
+            case "makanan":
+                $idA = 'MKN';
+                break;
+            case "minuman":
+                $idA = 'MNM';
+                break;
+            case "snack":
+                $idA = 'SNK';
+                break;
+            default:
+                $idA = 'NNN';
+                break;
+        }
+        $idright = DB::select("SELECT RIGHT(id,3) rightid FROM menus WHERE id LIKE '$idA%' ORDER BY rightid DESC");
+        if(!$idright){
+            $idB = sprintf("%04d", 1);
+        }else{
+            $idB = sprintf("%04d", $idright[0]->rightid + 1);
+        }
+        $validated["id"] = $idA . $idB;
+
+        $menu->update($validated);
+        $request->session()
+                ->flash('success', "Menu bernama <b> {$validated['nama']} </b> berhasil diperbaharui!");
+        return redirect()->route('menus.index');
     }
 
     /**
@@ -80,6 +152,8 @@ class MenuController extends Controller
      */
     public function destroy(menu $menu)
     {
-        //
+        $menu->delete();
+        return redirect(route('menus.index'))
+                ->with('success', "Menu {$menu['nama']} berhasil di hapus!");
     }
 }
